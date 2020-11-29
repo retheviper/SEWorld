@@ -45,7 +45,7 @@
 	<context:component-scan base-package="global.sesoc.seworld" />
 
 	<!-- Interceptor bean 등록 -->
-	<beans:bean id="loginInterceptor" class="global.sesoc.seworld.interceptor.LoginInterceptor" />
+	<beans:bean id="loginInterceptor" class="global.sesoc.seworld.application.interceptor.LoginInterceptor" />
 
 	<!-- Interceptor 경로 설정 -->
 	<interceptors>

@@ -1,12 +1,14 @@
-package global.sesoc.seworld.interceptor;
+package global.sesoc.seworld.application.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+@Slf4j
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
@@ -19,6 +21,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			response.sendRedirect(contextPath + "/login");
 			return false;
 		}
+		log.info("{} has login", loginId);
 		return true;
 	}
 

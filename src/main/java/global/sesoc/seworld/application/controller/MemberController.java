@@ -1,4 +1,4 @@
-package global.sesoc.seworld;
+package global.sesoc.seworld.application.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -8,17 +8,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import global.sesoc.seworld.dao.CalendarRepository;
 import global.sesoc.seworld.dao.MemberRepository;
@@ -29,32 +26,29 @@ import global.sesoc.seworld.dto.Member;
 import global.sesoc.seworld.dto.Wishing;
 import global.sesoc.seworld.util.MailHandler;
 
+@Slf4j
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-	@Autowired
-	JavaMailSender mailSender;
+	private final JavaMailSender mailSender;
 
-	@Autowired
-	MemberRepository memberRepository;
+	private final MemberRepository memberRepository;
 
-	@Autowired
-	WishingRepository wishingRepository;
+	private final WishingRepository wishingRepository;
 
-	@Autowired
-	CalendarRepository calendarRepository;
+	private final CalendarRepository calendarRepository;
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@GetMapping(value = "/login")
 	public String login() {
 		return "member/login";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping(value = "/login")
 	public String login(Member searchMember, boolean saveid, HttpServletResponse response, HttpSession session,
 			Model model) {
-		logger.info("[/login]");
-		Member loginMember = memberRepository.selectOneMember(searchMember.getMemberId());
+		log.info("[/login]");
+		final Member loginMember = memberRepository.selectOneMember(searchMember.getMemberId());
 		if (loginMember != null) {
 			session.setAttribute("loginId", loginMember.getMemberId());
 			session.setAttribute("loginName", loginMember.getMemberName());
@@ -83,7 +77,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		logger.info("[/logout]");
+		log.info("[/logout]");
 		session.invalidate();
 		return "redirect:/";
 	}
@@ -96,8 +90,8 @@ public class MemberController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public @ResponseBody Integer signup(@RequestBody Member signupMember)
 			throws MessagingException, UnsupportedEncodingException {
-		logger.info("[/signup]");
-		logger.info(signupMember.toString());
+		log.info("[/signup]");
+		log.info(signupMember.toString());
 		int result = memberRepository.insertOneMember(signupMember);
 		if (result == 1) {
 			MailHandler sendMail = new MailHandler(mailSender);
@@ -123,7 +117,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/verify.do", method = RequestMethod.GET)
 	public String verify(@RequestParam String email) {
-		logger.info("[/verify]");
+		log.info("[/verify]");
 		int result = memberRepository.verifyMember(email);
 		if (result == 0) {
 			return "member/verifyError";
@@ -133,7 +127,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/googleSignin", method = RequestMethod.POST)
 	public @ResponseBody Integer googleSignin(@RequestBody Member signinMember, HttpSession session) {
-		logger.info("[/googleSignin]");
+		log.info("[/googleSignin]");
 		Member m = memberRepository.selectOneMember(signinMember.getMemberId());
 		if (m == null) {
 			return 0; // 회원정보 없음
@@ -145,7 +139,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/facebookSignin", method = RequestMethod.POST)
 	public @ResponseBody Integer facebookSignin(@RequestBody Member signinMember, HttpSession session) {
-		logger.info("[/facebookSignin]");
+		log.info("[/facebookSignin]");
 		Member m = memberRepository.selectOneMember(signinMember.getMemberId());
 		if (m == null) {
 			return 0; // 회원정보 없음
@@ -157,7 +151,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/googleSignup", method = RequestMethod.POST)
 	public @ResponseBody Integer googleSignup(@RequestBody Member signupMember) {
-		logger.info("[/googleSignup]");
+		log.info("[/googleSignup]");
 		Member m = memberRepository.selectOneMember(signupMember.getMemberId());
 		if (m != null) {
 			return 0; // 이미 회원가입 됨
@@ -167,7 +161,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/facebookSignup", method = RequestMethod.POST)
 	public @ResponseBody Integer facebookSignup(@RequestBody Member signupMember) {
-		logger.info("[/facebookSignup]");
+		log.info("[/facebookSignup]");
 		Member m = memberRepository.selectOneMember(signupMember.getMemberId());
 		if (m != null) {
 			return 0; // 이미 회원가입 됨
@@ -177,13 +171,13 @@ public class MemberController {
 
 	@RequestMapping(value = "/calendar", method = RequestMethod.GET)
 	public String gocalendar() {
-		logger.info("[/calendar]");
+		log.info("[/calendar]");
 		return "member/calendar";
 	}
 	//캘린더 리슷 띄우기
 	@RequestMapping(value = "/gocalendar", method = RequestMethod.POST)
 	public @ResponseBody List<Exhibition> calendar(HttpSession session) {
-		logger.info("[/gocalendar]");
+		log.info("[/gocalendar]");
 		List<Exhibition> list;
 		Wishing wishing = new Wishing();
 		String loginId = (String) session.getAttribute("loginId");
@@ -201,7 +195,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/calendarTest", method = RequestMethod.POST)
 	public @ResponseBody Integer insertcalendarTest(Wishing wishing) {
-		logger.info("[/calendarTest]");
+		log.info("[/calendarTest]");
 		int result = wishingRepository.insertOneWishing(wishing);
 		return result;
 	}

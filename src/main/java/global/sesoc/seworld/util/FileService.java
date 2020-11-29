@@ -10,11 +10,11 @@ public class FileService {
 
 	/**
 	 * 업로드 된 파일을 지정된 경로에 저장하고, 저장된 파일명을 리턴
-	 * @param mfile 업로드된 파일
-	 * @param path 저장할 경로
+	 * @param upload 업로드된 파일
+	 * @param uploadPath 저장할 경로
 	 * @return 저장된 파일명
 	 */
-	public static String saveFile(MultipartFile upload, String uploadPath) {
+	public static String saveFile(final MultipartFile upload, final String uploadPath) {
 		//저장 폴더가 없으면 생성
 		File path = new File(uploadPath);
 		if (!path.isDirectory()) {
@@ -23,7 +23,7 @@ public class FileService {
 
 		//원본 파일명
 		String originalFilename = upload.getOriginalFilename();
-		if (originalFilename.trim().length() == 0) {
+		if (originalFilename.strip().length() == 0) {
 			return "";
 		}
 		

@@ -51,7 +51,7 @@ public class XmlParser {
 				String result = "";
 				String line;
 				while ((line = br.readLine()) != null) {
-					result = result + line.trim();
+					result = result + line.strip();
 				}
 				
 				InputSource is = new InputSource(new StringReader(result));
