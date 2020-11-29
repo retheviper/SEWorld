@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.seworld.dao.CommentLikesMapper">
+
+	<select id="selectCommentLikes" parameterType="CommentLikes" resultType="CommentLikes">
+		SELECT
+		memberId
+		,exhibitionId
+		,createdDate
+		FROM c6_comment_likes
+		WHERE memberId = #{memberId}
+		  AND exhibitionId = #{exhibitionId}
+	</select>
+
+	<insert id="insertCommentLikes" parameterType="CommentLikes">
+		INSERT INTO c6_comment_likes
+		(
+		memberId
+		,exhibitionId
+		,createdDate
+		)
+		VALUES
+		(
+		#{memberId}
+		,{exhibitionId}
+		,SYSDATE
+		)
+	</insert>
+
+	<delete id="deleteCommentLikes" parameterType="CommentLikes">
+		DELETE
+		FROM c6_comment_likes
+		WHERE memberId = #{memberId}
+		  AND exhibitionId = #{exhibitionId}
+	</delete>
+
+</mapper>

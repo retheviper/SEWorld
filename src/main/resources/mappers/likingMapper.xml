@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.seworld.dao.LikingMapper">
+
+	<select id="selectOneLiking" parameterType="Liking" resultType="Liking">
+		SELECT memberId, exhibitionId, liked, createdDate, updatedDate
+		FROM c6_liking
+		WHERE memberId = #{memberId}
+		  AND exhibitionId = #{exhibitionId}
+	</select>
+
+	<insert id="insertOneLiking" parameterType="Liking">
+		INSERT INTO c6_liking
+		(
+		memberId
+		,exhibitionId
+		)
+		VALUES
+		(
+		#{memberId}
+		,#{exhibitionId}
+		)
+	</insert>
+
+	<delete id="updateLikingDeleted" parameterType="Liking">
+		UPDATE c6_liking
+		SET
+		liked = 'N'
+		,updatedDate = SYSDATE
+		WHERE memberId = #{memberId}
+		  AND exhibitionId = #{exhibitionId}
+	</delete>
+
+	<update id="updateLikingInserted" parameterType="Liking">
+		UPDATE c6_liking
+		SET
+		liked = 'Y'
+		,updatedDate = SYSDATE
+		WHERE memberId = #{memberId}
+		  AND exhibitionId = #{exhibitionId}
+	</update>
+
+</mapper>

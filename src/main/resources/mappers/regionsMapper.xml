@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.seworld.dao.RegionsMapper">
+
+	<select id="selectAllRegions" resultType="Regions">
+		SELECT
+		regionId
+		,regionName
+		FROM c6_regions
+		ORDER BY regionId
+	</select>
+
+	<select id="selectOneRegion" parameterType="String" resultType="Regions">
+		SELECT
+		regionId
+		,regionName
+		FROM c6_regions
+		WHERE regionName = #{regionName}
+	</select>
+
+</mapper>

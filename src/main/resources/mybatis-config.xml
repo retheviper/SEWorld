@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="global.sesoc.seworld.dto.Board" alias="Board" />
+		<typeAlias type="global.sesoc.seworld.dto.BoardFile" alias="BoardFile" />
+		<typeAlias type="global.sesoc.seworld.dto.BoardReply" alias="BoardReply" />
+		<typeAlias type="global.sesoc.seworld.dto.Cities" alias="Cities" />
+		<typeAlias type="global.sesoc.seworld.dto.Comment" alias="Comment" />
+		<typeAlias type="global.sesoc.seworld.dto.Countries" alias="Countries" />
+		<typeAlias type="global.sesoc.seworld.dto.ExbtInfo" alias="ExbtInfo" />
+		<typeAlias type="global.sesoc.seworld.dto.Exhibition" alias="Exhibition" />
+		<typeAlias type="global.sesoc.seworld.dto.ExhibitionDetail" alias="ExhibitionDetail" />
+		<typeAlias type="global.sesoc.seworld.dto.ExbtWLCCount" alias="ExbtWLCCount" />
+		<typeAlias type="global.sesoc.seworld.dto.Followship" alias="Followship" />
+		<typeAlias type="global.sesoc.seworld.dto.Liking" alias="Liking" />
+		<typeAlias type="global.sesoc.seworld.dto.Member" alias="Member" />
+		<typeAlias type="global.sesoc.seworld.dto.MemberDetail" alias="MemberDetail" />
+		<typeAlias type="global.sesoc.seworld.dto.Regions" alias="Regions" />
+		<typeAlias type="global.sesoc.seworld.dto.Timeline" alias="Timeline" />
+		<typeAlias type="global.sesoc.seworld.dto.Wishing" alias="Wishing" />
+		<typeAlias type="global.sesoc.seworld.dto.Counting" alias="Counting" />
+		<typeAlias type="global.sesoc.seworld.dto.Calendar" alias="Calendar" />
+	</typeAliases>
+
+	<mappers>
+		<mapper resource="mappers/boardFileMapper.xml" />
+		<mapper resource="mappers/boardMapper.xml" />
+		<mapper resource="mappers/boardReplyMapper.xml" />
+		<mapper resource="mappers/citiesMapper.xml" />
+		<mapper resource="mappers/commentMapper.xml" />
+		<mapper resource="mappers/countriesMapper.xml" />
+		<mapper resource="mappers/exbtInfoMapper.xml" />
+		<mapper resource="mappers/exhibitionMapper.xml" />
+		<mapper resource="mappers/exhibitionDetailMapper.xml" />
+		<mapper resource="mappers/exbtWLCCountMapper.xml" />
+		<mapper resource="mappers/followshipMapper.xml" />
+		<mapper resource="mappers/likingMapper.xml" />
+		<mapper resource="mappers/memberMapper.xml" />
+		<mapper resource="mappers/memberDetailMapper.xml" />
+		<mapper resource="mappers/regionsMapper.xml" />
+		<mapper resource="mappers/timelineMapper.xml" />
+		<mapper resource="mappers/wishingMapper.xml" />
+		<mapper resource="mappers/calendarMapper.xml" />
+	</mappers>
+
+</configuration>

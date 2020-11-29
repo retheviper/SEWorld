@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.seworld.dao.FollowshipMapper">
+
+	<select id="selectFollowship" parameterType="Followship" resultType="Followship">
+		SELECT
+		follower
+		,following
+		,createdDate
+		FROM c6_followship
+		WHERE follower = #{follower}
+		  AND following = #{following}
+	</select>
+
+	<insert id="insertFollowship" parameterType="Followship">
+		INSERT INTO c6_followship
+		(
+		follower
+		,following
+		)
+		VALUES
+		(
+		#{follower}
+		,#{following}
+		)
+	</insert>
+
+	<delete id="deleteFollowship" parameterType="Followship">
+		DELETE
+		FROM c6_followship
+		WHERE follower = #{follower}
+		  AND following = #{following}
+	</delete>
+
+</mapper>

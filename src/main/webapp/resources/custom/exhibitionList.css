@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+td.details-control {
+    background: url('../custom/details_open.png') no-repeat center center;
+    background-size: 20px;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../custom/details_close.png') no-repeat center center;
+    background-size: 20px;
+}
+td.details-show {
+    cursor: pointer;
+}

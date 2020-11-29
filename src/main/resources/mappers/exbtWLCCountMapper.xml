@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.seworld.dao.ExbtWLCCountMapper">
+
+	<select id="viewCount" parameterType="String" resultType="ExbtWLCCount">
+		SELECT
+		w.wishingCount
+		,l.likingCount
+		,c.commentCount
+		FROM
+		(SELECT COUNT(*) wishingCount FROM c6_wishing WHERE exhibitionId = #{exhibitionId}) w,
+		(SELECT COUNT(*) likingCount FROM c6_liking WHERE exhibitionId = #{exhibitionId}) l,
+		(SELECT COUNT(*) commentCount FROM c6_comment WHERE exhibitionId = #{exhibitionId}) c
+	</select>
+
+</mapper>

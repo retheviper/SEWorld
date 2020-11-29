@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="global.sesoc.seworld.dao.MemberDetailMapper">
+
+	<select id="viewMemberDetail" parameterType="String" resultType="MemberDetail">
+		SELECT
+		f1.followingCount followerCount
+		,f2.followerCount followingCount
+		,w.wishingCount wishingCount
+		,c.commentCount commentCount
+		,b.reviewCount reviewCount
+		FROM
+		(SELECT COUNT(following) followingCount FROM c6_followship WHERE following = #{memberId}) f1,
+		(SELECT COUNT(follower) followerCount FROM c6_followship WHERE follower = #{memberId}) f2,
+		(SELECT COUNT(exhibitionId) wishingCount FROM c6_wishing WHERE memberId = #{memberId} AND wished = 'Y') w,
+		(SELECT COUNT(exhibitionId) commentCount FROM c6_comment WHERE memberId = #{memberId} AND rating != 0) c,
+		(SELECT COUNT(boardId) reviewCount FROM c6_board WHERE memberId = #{memberId} AND category = 'review') b
+	</select>
+
+</mapper>
