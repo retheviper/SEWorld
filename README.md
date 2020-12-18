@@ -16,3 +16,18 @@ SCIT Master 35기 3차 팀 프로젝트 과제.
 - MyBatis -> JPA.
 - OracleDB -> PostgreSQL.
 
+## 概要
+
+SCIT Master 35期の3次チームプロジェクト課題の成果物。
+
+今の自分がこれを書き直すとしたら、どのような感じでリファクタリングするか知りたくなってリポジトリを分離した。
+
+本来のリポジトリは[こちら](https://github.com/scitmaster35thD6/teamProjectGit)。
+
+## 目標
+
+- Maven -> Gradle移行
+- 依存関係の整理
+- コードクリーンアップ、リファクタリング、クラス再設計など
+- MyBatis -> JPA
+- OracleDB -> PostgreSQL
