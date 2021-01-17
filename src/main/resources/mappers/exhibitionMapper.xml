@@ -1,139 +1,125 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.ExhibitionMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.ExhibitionMapper">
 
-	<select id="showExhibitionList" resultType="exhibition"
-		parameterType="String">
-		SELECT
-		exhibitionId
-		, exhibitionTitleKor
-		,
-		exhibitionTitleEng
-		, openingTerm
-		, firstOpeningYear
-		, openingCountry
-		,
-		openingCity
-		, exhibitionHall
-		, sponsor
-		, createdDate
-		, updatedDate
-		,
-		dataOffer
-		FROM c6_exhibition
-		where exhibitionTitleKor like '%' ||
-		#{searchText} || '%' or exhibitionTitleEng like '%' || #{searchText}
-		|| '%'
-		or openingCountry like '%' || #{searchText} || '%' or
-		openingCity like '%' || #{searchText} || '%' or openingTerm like '%'
-		|| #{searchText} || '%'
-		ORDER BY
-		openingTerm DESC
-	</select>
+    <select id="showExhibitionList" resultType="exhibition"
+            parameterType="String">
+        SELECT
+        exhibitionId
+        , exhibitionTitleKor
+        , exhibitionTitleEng
+        , openingTerm
+        , firstOpeningYear
+        , openingCountry
+        , openingCity
+        , exhibitionHall
+        , sponsor
+        , createdDate
+        , updatedDate
+        , dataOffer
+        FROM c6_exhibition
+        where exhibitionTitleKor like '%' ||
+        #{searchText} || '%' or exhibitionTitleEng like '%' || #{searchText}
+        || '%'
+        or openingCountry like '%' || #{searchText} || '%' or
+        openingCity like '%' || #{searchText} || '%' or openingTerm like '%'
+        || #{searchText} || '%'
+        ORDER BY
+        openingTerm DESC
+    </select>
 
-	<!-- 전체 국가들 가져오기 -->
-	<select id="getTotalCountry" resultType="String">
-		select countryname from
-		c6_countries
-	</select>
+    <!-- 전체 국가들 가져오기 -->
+    <select id="getTotalCountry" resultType="String">
+        select countryname from
+        c6_countries
+    </select>
 
-	<!-- 전체 건수 가져오기 -->
-	<select id="getTotalList" resultType="int"
-		parameterType="String">
-		SELECT COUNT(*)
-		FROM
-		c6_exhibition
-		where exhibitionTitleKor
-		like '%' ||
-		#{searchText} || '%' or exhibitionTitleEng like '%' ||
-		#{searchText}
-		|| '%'
-		or openingCountry like '%' || #{searchText} || '%'
-		or
-		openingCity like '%' || #{searchText} || '%' or openingTerm like '%'
-		|| #{searchText} || '%'
-	</select>
+    <!-- 전체 건수 가져오기 -->
+    <select id="getTotalList" resultType="int"
+            parameterType="String">
+        SELECT COUNT(*)
+        FROM
+        c6_exhibition
+        where exhibitionTitleKor
+        like '%' ||
+        #{searchText} || '%' or exhibitionTitleEng like '%' ||
+        #{searchText}
+        || '%'
+        or openingCountry like '%' || #{searchText} || '%'
+        or
+        openingCity like '%' || #{searchText} || '%' or openingTerm like '%'
+        || #{searchText} || '%'
+    </select>
 
-	<!-- 메인에 표시할 최근 전시회 12건 -->
-	<select id="getRecentExhibition" resultType="exhibition">
-		SELECT
-		exhibitionId
-		,
-		exhibitionTitleKor
-		,
-		exhibitionTitleEng
-		, openingTerm
-		, firstOpeningYear
-		,
-		openingCountry
-		,
-		openingCity
-		, exhibitionHall
-		, sponsor
-		, createdDate
-		,
-		updatedDate
-		,
-		dataOffer
-		from(
-		select
-		*
-		from c6_exhibition
-		order by
-		openingTerm DESC
-		)
-		where rownum
-		&lt; 13
-	</select>
+    <!-- 메인에 표시할 최근 전시회 12건 -->
+    <select id="getRecentExhibition" resultType="exhibition">
+        SELECT
+        exhibitionId
+        , exhibitionTitleKor
+        , exhibitionTitleEng
+        , openingTerm
+        , firstOpeningYear
+        , openingCountry
+        , openingCity
+        , exhibitionHall
+        , sponsor
+        , createdDate
+        , updatedDate
+        , dataOffer
+        from(
+        select
+        *
+        from c6_exhibition
+        order by
+        openingTerm DESC
+        )
+        where rownum
+        &lt; 13
+    </select>
 
-	<select id="getListForMap" resultType="exhibition">
-		select * FROM
-		c6_exhibition
-	</select>
+    <select id="getListForMap" resultType="exhibition">
+        select * FROM
+        c6_exhibition
+    </select>
 
-	<select id="showExhibitionDetail" resultType="exhibition"
-		parameterType="String">
-		SELECT
-		exhibitionId
-		, exhibitionTitleKor
-		,
-		exhibitionTitleEng
-		, openingTerm
-		,
-		firstOpeningYear
-		, openingCountry
-		,
-		openingCity
-		, exhibitionHall
-		,sponsor
-		, createdDate
-		, updatedDate
-		,
-		dataOffer
-		FROM c6_exhibition
-		WHERE
-		exhibitionId = #{selectedCountry}
-	</select>
+    <select id="showExhibitionDetail" resultType="exhibition"
+            parameterType="String">
+        SELECT
+        exhibitionId
+        , exhibitionTitleKor
+        , exhibitionTitleEng
+        , openingTerm
+        , firstOpeningYear
+        , openingCountry
+        , openingCity
+        , exhibitionHall
+        ,sponsor
+        , createdDate
+        , updatedDate
+        , dataOffer
+        FROM c6_exhibition
+        WHERE
+        exhibitionId = #{selectedCountry}
+    </select>
 
-	<!-- 각국 전시회 수 세기 -->
-	<select id="countCountry" parameterType="String"
-		resultType="int">
-		select count(*) from c6_exhibition where openingCountry =
-		#{selectedCountry}
-	</select>
+    <!-- 각국 전시회 수 세기 -->
+    <select id="countCountry" parameterType="String"
+            resultType="int">
+        select count(*) from c6_exhibition where openingCountry =
+        #{selectedCountry}
+    </select>
 
-	<select id="countAllExhibition" resultType="Counting">
-		SELECT c.countryName
-		as countryName, count(e.openingCountry) as num
-		FROM c6_countries c LEFT
-		OUTER JOIN c6_exhibition e
-		ON c.countryName = e.openingCountry
-		GROUP BY c.countryName
-		ORDER BY 1
-
-	</select>
+    <select id="countAllExhibition" resultType="Counting">
+        SELECT c.countryName
+        as countryName, count(e.openingCountry) as num
+        FROM c6_countries c LEFT
+        OUTER JOIN c6_exhibition e
+        ON c.countryName = e.openingCountry
+        GROUP BY c.countryName
+        ORDER BY 1
+    </select>
 
 </mapper>

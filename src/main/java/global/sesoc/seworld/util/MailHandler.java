@@ -1,6 +1,7 @@
 package global.sesoc.seworld.util;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import javax.activation.DataSource;
 import javax.mail.MessagingException;
@@ -10,33 +11,36 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailHandler {
-	private JavaMailSender mailSender;
-	private MimeMessage message;
-	private MimeMessageHelper messageHelper;
 
-	public MailHandler(JavaMailSender mailSender) throws MessagingException {
+	private final JavaMailSender mailSender;
+
+	private final MimeMessage message;
+
+	private final MimeMessageHelper messageHelper;
+
+	public MailHandler(final JavaMailSender mailSender) throws MessagingException {
 		this.mailSender = mailSender;
-		message = this.mailSender.createMimeMessage();
-		messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		this.message = this.mailSender.createMimeMessage();
+		this.messageHelper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
 	}
 
-	public void setSubject(String subject) throws MessagingException {
+	public void setSubject(final String subject) throws MessagingException {
 		messageHelper.setSubject(subject);
 	}
 
-	public void setText(String htmlContent) throws MessagingException {
+	public void setText(final String htmlContent) throws MessagingException {
 		messageHelper.setText(htmlContent, true);
 	}
 
-	public void setFrom(String email, String name) throws UnsupportedEncodingException, MessagingException {
+	public void setFrom(final String email, final String name) throws UnsupportedEncodingException, MessagingException {
 		messageHelper.setFrom(email, name);
 	}
 
-	public void setTo(String email) throws MessagingException {
+	public void setTo(final String email) throws MessagingException {
 		messageHelper.setTo(email);
 	}
 
-	public void addInline(String contentId, DataSource dataSource) throws MessagingException {
+	public void addInline(final String contentId, final DataSource dataSource) throws MessagingException {
 		messageHelper.addInline(contentId, dataSource);
 	}
 

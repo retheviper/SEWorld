@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.ExhibitionDetailMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.ExhibitionDetailMapper">
 
-	<select id="viewExhibitionDetail" parameterType="ExhibitionDetail" resultType="ExhibitionDetail">
-		SELECT
-		e.exhibitionId exhibitionId
-		,#{memberId} memberId
-		,w.wished wishing
-		,l.liked liking
-		,c.rating rating
-		,c.content content
-		FROM c6_exhibition e
-		LEFT OUTER JOIN (SELECT * FROM c6_wishing WHERE memberId = #{memberId}) w
-		  ON e.exhibitionId = w.exhibitionId
-		LEFT OUTER JOIN (SELECT * FROM c6_liking WHERE memberId = #{memberId}) l
-		  ON e.exhibitionId = l.exhibitionId
-		LEFT OUTER JOIN (SELECT * FROM c6_comment WHERE memberId = #{memberId}) c
-		  ON e.exhibitionId = c.exhibitionId
-		WHERE e.exhibitionId = #{exhibitionId}
-	</select>
+    <select id="viewExhibitionDetail" parameterType="ExhibitionDetail" resultType="ExhibitionDetail">
+        SELECT
+        e.exhibitionId exhibitionId
+        ,#{memberId} memberId
+        ,w.wished wishing
+        ,l.liked liking
+        ,c.rating rating
+        ,c.content content
+        FROM c6_exhibition e
+        LEFT OUTER JOIN (SELECT * FROM c6_wishing WHERE memberId = #{memberId}) w
+        ON e.exhibitionId = w.exhibitionId
+        LEFT OUTER JOIN (SELECT * FROM c6_liking WHERE memberId = #{memberId}) l
+        ON e.exhibitionId = l.exhibitionId
+        LEFT OUTER JOIN (SELECT * FROM c6_comment WHERE memberId = #{memberId}) c
+        ON e.exhibitionId = c.exhibitionId
+        WHERE e.exhibitionId = #{exhibitionId}
+    </select>
 
 </mapper>

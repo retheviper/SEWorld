@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.CalendarMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.CalendarMapper">
 
-	<select id="selectCalendar" parameterType="Calendar" resultType="Calendar">
-		SELECT
-		calendarId
-		,memberId
-		,title
-		,bgType
-		,startDay
-		,endDay
-		,createdDate
-		,updatedDate
-		FROM c6_calendar
-		WHERE memberId = #{memberId}
-		  AND title = #{title}
-		  <if test="bgType != null">
-		  AND bgType = #{bgType}
-		  </if>
-		  <if test="startDay != null">
-		  AND startDay = #{startDay}
-		  </if>
-		  <if test="endDay != null">
-		  AND endDay = #{endDay}
-		  </if>
-	</select>
+    <select id="selectCalendar" parameterType="Calendar" resultType="Calendar">
+        SELECT
+        calendarId
+        ,memberId
+        ,title
+        ,bgType
+        ,startDay
+        ,endDay
+        ,createdDate
+        ,updatedDate
+        FROM c6_calendar
+        WHERE memberId = #{memberId}
+        AND title = #{title}
+        <if test="bgType != null">
+            AND bgType = #{bgType}
+        </if>
+        <if test="startDay != null">
+            AND startDay = #{startDay}
+        </if>
+        <if test="endDay != null">
+            AND endDay = #{endDay}
+        </if>
+    </select>
 
-	<insert id="insertCalendar" parameterType="Calendar">
-		INSERT INTO c6_calendar
-		(
-		calendarId
-		,memberId
-		,title
-		,bgType
-		,startDay
-		,endDay
-		)
-		VALUES
-		(
-		REPLACE('C' || TO_CHAR(c6_calendar_seq.NEXTVAL, '000000000'), ' ', '')
-		,#{memberId}
-		,#{title}
-		,#{bgType}
-		,TO_DATE(#{startDay}, 'YYYY-MM-DD')
-		,TO_DATE(#{endDay}, 'YYYY-MM-DD')
-		)
-	</insert>
+    <insert id="insertCalendar" parameterType="Calendar">
+        INSERT INTO c6_calendar
+        (
+        calendarId
+        ,memberId
+        ,title
+        ,bgType
+        ,startDay
+        ,endDay
+        )
+        VALUES
+        (
+        REPLACE('C' || TO_CHAR(c6_calendar_seq.NEXTVAL, '000000000'), ' ', '')
+        ,#{memberId}
+        ,#{title}
+        ,#{bgType}
+        ,TO_DATE(#{startDay}, 'YYYY-MM-DD')
+        ,TO_DATE(#{endDay}, 'YYYY-MM-DD')
+        )
+    </insert>
 
-	<delete id="deleteCalendar" parameterType="String">
-		DELETE
-		FROM c6_calendar
-		WHERE calendarId = #{calendarId}
-	</delete>
+    <delete id="deleteCalendar" parameterType="String">
+        DELETE
+        FROM c6_calendar
+        WHERE calendarId = #{calendarId}
+    </delete>
 
-	<update id="updateCalendar" parameterType="String">
-		UPDATE c6_calendar
-		SET title = #{title}
-		<if test="bgType != null">
-		, bgType = #{bgType}
-		</if>
-		WHERE calendarId = #{calendarId}
-	</update>
+    <update id="updateCalendar" parameterType="String">
+        UPDATE c6_calendar
+        SET title = #{title}
+        <if test="bgType != null">
+            , bgType = #{bgType}
+        </if>
+        WHERE calendarId = #{calendarId}
+    </update>
 
-	<select id="selectAllCalendars" parameterType="Calendar" resultType="Calendar">
-		SELECT
-		calendarId
-		,memberId
-		,title
-		,bgType
-		,startDay
-		,endDay
-		,createdDate
-		,updatedDate
-		FROM c6_calendar
-		WHERE memberId = #{memberId}
-	</select>
+    <select id="selectAllCalendars" parameterType="Calendar" resultType="Calendar">
+        SELECT
+        calendarId
+        ,memberId
+        ,title
+        ,bgType
+        ,startDay
+        ,endDay
+        ,createdDate
+        ,updatedDate
+        FROM c6_calendar
+        WHERE memberId = #{memberId}
+    </select>
 
 </mapper>

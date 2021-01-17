@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.CommentReplyMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.CommentReplyMapper">
 
-	<select id="selectAllCommentReplies" parameterType="Comment" resultType="CommentReply">
-		SELECT
-		commentReplyId
-		,memberId
-		,exhibitionId
-		,content
-		,createdDate
-		,updatedDate
-		,likes
-		FROM c6_comment_reply
-		WHERE memberId = #{memberId}
-		  AND exhibitionId = #{exhibitionId}
-	</select>
+    <select id="selectAllCommentReplies" parameterType="Comment" resultType="CommentReply">
+        SELECT
+        commentReplyId
+        ,memberId
+        ,exhibitionId
+        ,content
+        ,createdDate
+        ,updatedDate
+        ,likes
+        FROM c6_comment_reply
+        WHERE memberId = #{memberId}
+        AND exhibitionId = #{exhibitionId}
+    </select>
 
-	<select id="selectOneCommentReply" parameterType="String" resultType="CommentReply">
-		SELECT
-		commentReplyId
-		,memberId
-		,exhibitionId
-		,content
-		,createdDate
-		,updatedDate
-		,likes
-		FROM c6_comment_reply
-		WHERE commentReplyId = #{commentReplyId}
-	</select>
+    <select id="selectOneCommentReply" parameterType="String" resultType="CommentReply">
+        SELECT
+        commentReplyId
+        ,memberId
+        ,exhibitionId
+        ,content
+        ,createdDate
+        ,updatedDate
+        ,likes
+        FROM c6_comment_reply
+        WHERE commentReplyId = #{commentReplyId}
+    </select>
 
-	<insert id="insertOneCommentReply" parameterType="CommentReply">
-		INSERT INTO c6_comment_reply
-		(
-		commentReplyId
-		,memberId
-		,exhibitionId
-		,content
-		,createdDate
-		,updatedDate
-		,likes
-		)
-		VALUES
-		(
-		REPLACE('CR' || TO_CHAR(c6_comment_reply_seq.NEXTVAL, '000000'), ' ', '')
-		,#{memberId}
-		,#{exhibitionId}
-		,#{content}
-		,SYSDATE
-		,SYSDATE
-		,0
-		)
-	</insert>
+    <insert id="insertOneCommentReply" parameterType="CommentReply">
+        INSERT INTO c6_comment_reply
+        (
+        commentReplyId
+        ,memberId
+        ,exhibitionId
+        ,content
+        ,createdDate
+        ,updatedDate
+        ,likes
+        )
+        VALUES
+        (
+        REPLACE('CR' || TO_CHAR(c6_comment_reply_seq.NEXTVAL, '000000'), ' ', '')
+        ,#{memberId}
+        ,#{exhibitionId}
+        ,#{content}
+        ,SYSDATE
+        ,SYSDATE
+        ,0
+        )
+    </insert>
 
-	<delete id="deleteOneCommentReply" parameterType="CommentReply">
-		DELETE
-		FROM c6_comment_reply
-		WHERE commentReplyId = #{commentReplyId}
-		  AND writerId = #{writerId}
-	</delete>
+    <delete id="deleteOneCommentReply" parameterType="CommentReply">
+        DELETE
+        FROM c6_comment_reply
+        WHERE commentReplyId = #{commentReplyId}
+        AND writerId = #{writerId}
+    </delete>
 
-	<update id="updateOneCommentReply" parameterType="CommentReply">
-		UPDATE c6_comment_reply
-		SET
-		content = #{content}
-		,updatedDate = SYSDATE
-		WHERE commentReplyId = #{commentReplyId}
-		  AND writerId = #{writerId}
-	</update>
+    <update id="updateOneCommentReply" parameterType="CommentReply">
+        UPDATE c6_comment_reply
+        SET
+        content = #{content}
+        ,updatedDate = SYSDATE
+        WHERE commentReplyId = #{commentReplyId}
+        AND writerId = #{writerId}
+    </update>
 
 </mapper>

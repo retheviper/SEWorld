@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.BoardFileMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.BoardFileMapper">
 
-	<select id="selectAllBoardFiles" parameterType="String"
-		resultType="BoardFile">
-		SELECT
-		boardFileId
-		,boardId
-		,ogFilename
-		,svFilename
-		,fileSize
-		,createdDate
-		,updatedDate
-		FROM c6_board_file
-		WHERE boardId = #{boardId}
-		ORDER BY boardFileId
-	</select>
+    <select id="selectAllBoardFiles" parameterType="String"
+            resultType="BoardFile">
+        SELECT
+        boardFileId
+        ,boardId
+        ,ogFilename
+        ,svFilename
+        ,fileSize
+        ,createdDate
+        ,updatedDate
+        FROM c6_board_file
+        WHERE boardId = #{boardId}
+        ORDER BY boardFileId
+    </select>
 
-	<select id="selectOneBoardFile" parameterType="String"
-		resultType="BoardFile">
-		SELECT
-		boardFileId
-		,boardId
-		,ogFilename
-		,svFilename
-		,fileSize
-		,createdDate
-		,updatedDate
-		FROM c6_board_file
-		WHERE boardFileId = #{boardfileid, jdbcType=VARCHAR}
-	</select>
+    <select id="selectOneBoardFile" parameterType="String"
+            resultType="BoardFile">
+        SELECT
+        boardFileId
+        ,boardId
+        ,ogFilename
+        ,svFilename
+        ,fileSize
+        ,createdDate
+        ,updatedDate
+        FROM c6_board_file
+        WHERE boardFileId = #{boardfileid, jdbcType=VARCHAR}
+    </select>
 
-	<select id="getBoardFileIdByBoardId" parameterType="String"
-		resultType="String">
-		select boardFileId
-		from c6_board_file
-		where boardId=#{boardId, jdbcType=VARCHAR}
-	</select>
+    <select id="getBoardFileIdByBoardId" parameterType="String"
+            resultType="String">
+        select boardFileId
+        from c6_board_file
+        where boardId=#{boardId, jdbcType=VARCHAR}
+    </select>
 
-	<insert id="insertOneBoardFile" parameterType="BoardFile">
-		INSERT INTO
-		c6_board_file
-		(
-		boardFileId
-		,boardId
-		,ogFilename
-		,svFilename
-		,fileSize
-		,createdDate
-		,updatedDate
-		)
-		VALUES
-		(
-		REPLACE(#{boardId} || '-F' || TO_CHAR(c6_board_file_seq.NEXTVAL, '0000'), ' ', '')
-		,#{boardId}
-		,#{ogFilename}
-		,#{svFilename}
-		,#{fileSize}
-		,SYSDATE
-		,SYSDATE
-		)
-	</insert>
+    <insert id="insertOneBoardFile" parameterType="BoardFile">
+        INSERT INTO
+        c6_board_file
+        (
+        boardFileId
+        ,boardId
+        ,ogFilename
+        ,svFilename
+        ,fileSize
+        ,createdDate
+        ,updatedDate
+        )
+        VALUES
+        (
+        REPLACE(#{boardId} || '-F' || TO_CHAR(c6_board_file_seq.NEXTVAL, '0000'), ' ', '')
+        ,#{boardId}
+        ,#{ogFilename}
+        ,#{svFilename}
+        ,#{fileSize}
+        ,SYSDATE
+        ,SYSDATE
+        )
+    </insert>
 
-	<delete id="deleteOneBoardFile" parameterType="String">
-		DELETE
-		FROM
-		c6_board_file
-		WHERE boardFileId = #{boardFileId, jdbcType=VARCHAR}
-	</delete>
+    <delete id="deleteOneBoardFile" parameterType="String">
+        DELETE
+        FROM
+        c6_board_file
+        WHERE boardFileId = #{boardFileId, jdbcType=VARCHAR}
+    </delete>
 
-	<update id="updateOneBoardFile" parameterType="BoardFile">
-		UPDATE
-		c6_board_file
-		SET
-		ogFilename = #{ogFilename}
-		,svFilename = #{svFilename}
-		WHERE boardFileId = #{boardFileId}
-	</update>
+    <update id="updateOneBoardFile" parameterType="BoardFile">
+        UPDATE
+        c6_board_file
+        SET
+        ogFilename = #{ogFilename}
+        ,svFilename = #{svFilename}
+        WHERE boardFileId = #{boardFileId}
+    </update>
 
 </mapper>

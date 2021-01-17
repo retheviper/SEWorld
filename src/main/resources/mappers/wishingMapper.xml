@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.WishingMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.WishingMapper">
 
-	<select id="selectOneWishing" parameterType="Wishing" resultType="Wishing">
-		SELECT memberId, exhibitionId, wished, createdDate, updatedDate
-		FROM c6_wishing
-		WHERE memberId = #{memberId}
-		  AND exhibitionId = #{exhibitionId}
-	</select>
-	
-	<!-- 달력에 전체 출력용 -->
-	<select id="selectAllWising" resultType="Exhibition" parameterType="Wishing">
-		select e.openingterm, e.exhibitiontitlekor
-		from c6_wishing w, c6_exhibition e
-		where w.memberId=#{memberId}
-		and w.exhibitionId = e.exhibitionId
-	</select>
-	
-	<insert id="insertOneWishing" parameterType="Wishing">
-		INSERT INTO c6_wishing
-		(
-		memberId
-		,exhibitionId
-		)
-		VALUES
-		(
-		#{memberId}
-		,#{exhibitionId}
-		)
-	</insert>
+    <select id="selectOneWishing" parameterType="Wishing" resultType="Wishing">
+        SELECT memberId, exhibitionId, wished, createdDate, updatedDate
+        FROM c6_wishing
+        WHERE memberId = #{memberId}
+        AND exhibitionId = #{exhibitionId}
+    </select>
 
-	<delete id="updateWishingDeleted" parameterType="Wishing">
-		UPDATE c6_wishing
-		SET
-		wished = 'N'
-		,updatedDate = SYSDATE
-		WHERE memberId = #{memberId}
-		  AND exhibitionId = #{exhibitionId}
-	</delete>
+    <!-- 달력에 전체 출력용 -->
+    <select id="selectAllWising" resultType="Exhibition" parameterType="Wishing">
+        select e.openingterm, e.exhibitiontitlekor
+        from c6_wishing w, c6_exhibition e
+        where w.memberId=#{memberId}
+        and w.exhibitionId = e.exhibitionId
+    </select>
 
-	<update id="updateWishingInserted" parameterType="Wishing">
-		UPDATE c6_wishing
-		SET
-		wished = 'Y'
-		,updatedDate = SYSDATE
-		WHERE memberId = #{memberId}
-		  AND exhibitionId = #{exhibitionId}
-	</update>
+    <insert id="insertOneWishing" parameterType="Wishing">
+        INSERT INTO c6_wishing
+        (
+        memberId
+        ,exhibitionId
+        )
+        VALUES
+        (
+        #{memberId}
+        ,#{exhibitionId}
+        )
+    </insert>
+
+    <delete id="updateWishingDeleted" parameterType="Wishing">
+        UPDATE c6_wishing
+        SET
+        wished = 'N'
+        ,updatedDate = SYSDATE
+        WHERE memberId = #{memberId}
+        AND exhibitionId = #{exhibitionId}
+    </delete>
+
+    <update id="updateWishingInserted" parameterType="Wishing">
+        UPDATE c6_wishing
+        SET
+        wished = 'Y'
+        ,updatedDate = SYSDATE
+        WHERE memberId = #{memberId}
+        AND exhibitionId = #{exhibitionId}
+    </update>
 
 </mapper>

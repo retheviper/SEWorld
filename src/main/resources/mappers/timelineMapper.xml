@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.TimelineMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.TimelineMapper">
 
-	<select id="myTimeline" parameterType="String" resultType="Timeline">
-		SELECT
-		e.exhibitionTitleKor exhibitionTitleKor
-		,e.openingTerm openingTerm
-		,e.openingCountry openingCountry
-		,e.openingCity openingCity
-		,w.createdDate wishingCreatedDate
-		,c.rating commentRating
-		,c.content commentContent
-		,c.createdDate commentCreatedDate
-		,b.boardId boardId
-		,b.title boardtitle
-		,b.content boardContent
-		,b.createdDate boardCreatedDate
-		FROM c6_exhibition e
-		LEFT OUTER JOIN (SELECT * FROM c6_wishing WHERE memberId = #{memberId} AND wished = 'Y') w
-		  ON e.exhibitionId = w.exhibitionId
-		LEFT OUTER JOIN (SELECT * FROM c6_comment WHERE memberId = #{memberId} AND rating != 0) c
-		  ON e.exhibitionId = c.exhibitionId
-		LEFT OUTER JOIN (SELECT * FROM c6_board WHERE memberId = #{memberId} AND category = 'review') b
-		  ON e.exhibitionId = b.exhibitionId
-		WHERE w.createdDate IS NOT NULL
-		   OR c.createdDate IS NOT NULL
-		   OR b.createdDate IS NOT NULL
-		ORDER BY wishingCreatedDate DESC, commentCreatedDate DESC, boardCreatedDate DESC
-	</select>
+    <select id="myTimeline" parameterType="String" resultType="Timeline">
+        SELECT
+        e.exhibitionTitleKor exhibitionTitleKor
+        ,e.openingTerm openingTerm
+        ,e.openingCountry openingCountry
+        ,e.openingCity openingCity
+        ,w.createdDate wishingCreatedDate
+        ,c.rating commentRating
+        ,c.content commentContent
+        ,c.createdDate commentCreatedDate
+        ,b.boardId boardId
+        ,b.title boardtitle
+        ,b.content boardContent
+        ,b.createdDate boardCreatedDate
+        FROM c6_exhibition e
+        LEFT OUTER JOIN (SELECT * FROM c6_wishing WHERE memberId = #{memberId} AND wished = 'Y') w
+        ON e.exhibitionId = w.exhibitionId
+        LEFT OUTER JOIN (SELECT * FROM c6_comment WHERE memberId = #{memberId} AND rating != 0) c
+        ON e.exhibitionId = c.exhibitionId
+        LEFT OUTER JOIN (SELECT * FROM c6_board WHERE memberId = #{memberId} AND category = 'review') b
+        ON e.exhibitionId = b.exhibitionId
+        WHERE w.createdDate IS NOT NULL
+        OR c.createdDate IS NOT NULL
+        OR b.createdDate IS NOT NULL
+        ORDER BY wishingCreatedDate DESC, commentCreatedDate DESC, boardCreatedDate DESC
+    </select>
 
-	<select id="myWishing" parameterType="String" resultType="Timeline">
-		SELECT
-		e.exhibitionTitleKor exhibitionTitleKor
-		,e.openingTerm openingTerm
-		,e.openingCountry openingCountry
-		,e.openingCity openingCity
-		,w.createdDate wishingCreatedDate
-		FROM c6_exhibition e
-		LEFT OUTER JOIN (SELECT * FROM c6_wishing WHERE memberId = #{memberId} AND wished = 'Y') w
-		  ON e.exhibitionId = w.exhibitionId
-		WHERE w.createdDate IS NOT NULL
-		ORDER BY wishingCreatedDate DESC
-	</select>
+    <select id="myWishing" parameterType="String" resultType="Timeline">
+        SELECT
+        e.exhibitionTitleKor exhibitionTitleKor
+        ,e.openingTerm openingTerm
+        ,e.openingCountry openingCountry
+        ,e.openingCity openingCity
+        ,w.createdDate wishingCreatedDate
+        FROM c6_exhibition e
+        LEFT OUTER JOIN (SELECT * FROM c6_wishing WHERE memberId = #{memberId} AND wished = 'Y') w
+        ON e.exhibitionId = w.exhibitionId
+        WHERE w.createdDate IS NOT NULL
+        ORDER BY wishingCreatedDate DESC
+    </select>
 
-	<select id="myComment" parameterType="String" resultType="Timeline">
-		SELECT
-		e.exhibitionTitleKor exhibitionTitleKor
-		,e.openingTerm openingTerm
-		,e.openingCountry openingCountry
-		,e.openingCity openingCity
-		,c.rating commentRating
-		,c.content commentContent
-		,c.createdDate commentCreatedDate
-		FROM c6_exhibition e
-		LEFT OUTER JOIN (SELECT * FROM c6_comment WHERE memberId = #{memberId} AND rating != 0) c
-		  ON e.exhibitionId = c.exhibitionId
-		WHERE c.createdDate IS NOT NULL
-		ORDER BY commentCreatedDate DESC
-	</select>
+    <select id="myComment" parameterType="String" resultType="Timeline">
+        SELECT
+        e.exhibitionTitleKor exhibitionTitleKor
+        ,e.openingTerm openingTerm
+        ,e.openingCountry openingCountry
+        ,e.openingCity openingCity
+        ,c.rating commentRating
+        ,c.content commentContent
+        ,c.createdDate commentCreatedDate
+        FROM c6_exhibition e
+        LEFT OUTER JOIN (SELECT * FROM c6_comment WHERE memberId = #{memberId} AND rating != 0) c
+        ON e.exhibitionId = c.exhibitionId
+        WHERE c.createdDate IS NOT NULL
+        ORDER BY commentCreatedDate DESC
+    </select>
 
-	<select id="myReview" parameterType="String" resultType="Timeline">
-		SELECT
-		e.exhibitionTitleKor exhibitionTitleKor
-		,e.openingTerm openingTerm
-		,e.openingCountry openingCountry
-		,e.openingCity openingCity
-		,b.boardId boardId
-		,b.title boardtitle
-		,b.content boardContent
-		,b.createdDate boardCreatedDate
-		FROM c6_exhibition e
-		LEFT OUTER JOIN (SELECT * FROM c6_board WHERE memberId = #{memberId} AND category = 'review') b
-		  ON e.exhibitionId = b.exhibitionId
-		WHERE b.createdDate IS NOT NULL
-		ORDER BY boardCreatedDate DESC
-	</select>
+    <select id="myReview" parameterType="String" resultType="Timeline">
+        SELECT
+        e.exhibitionTitleKor exhibitionTitleKor
+        ,e.openingTerm openingTerm
+        ,e.openingCountry openingCountry
+        ,e.openingCity openingCity
+        ,b.boardId boardId
+        ,b.title boardtitle
+        ,b.content boardContent
+        ,b.createdDate boardCreatedDate
+        FROM c6_exhibition e
+        LEFT OUTER JOIN (SELECT * FROM c6_board WHERE memberId = #{memberId} AND category = 'review') b
+        ON e.exhibitionId = b.exhibitionId
+        WHERE b.createdDate IS NOT NULL
+        ORDER BY boardCreatedDate DESC
+    </select>
 
 </mapper>

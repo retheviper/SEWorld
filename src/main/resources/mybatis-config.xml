@@ -4,25 +4,25 @@
 <configuration>
 
 	<typeAliases>
-		<typeAlias type="global.sesoc.seworld.dto.Board" alias="Board" />
-		<typeAlias type="global.sesoc.seworld.dto.BoardFile" alias="BoardFile" />
-		<typeAlias type="global.sesoc.seworld.dto.BoardReply" alias="BoardReply" />
-		<typeAlias type="global.sesoc.seworld.dto.Cities" alias="Cities" />
-		<typeAlias type="global.sesoc.seworld.dto.Comment" alias="Comment" />
-		<typeAlias type="global.sesoc.seworld.dto.Countries" alias="Countries" />
-		<typeAlias type="global.sesoc.seworld.dto.ExbtInfo" alias="ExbtInfo" />
-		<typeAlias type="global.sesoc.seworld.dto.Exhibition" alias="Exhibition" />
-		<typeAlias type="global.sesoc.seworld.dto.ExhibitionDetail" alias="ExhibitionDetail" />
-		<typeAlias type="global.sesoc.seworld.dto.ExbtWLCCount" alias="ExbtWLCCount" />
-		<typeAlias type="global.sesoc.seworld.dto.Followship" alias="Followship" />
-		<typeAlias type="global.sesoc.seworld.dto.Liking" alias="Liking" />
-		<typeAlias type="global.sesoc.seworld.dto.Member" alias="Member" />
-		<typeAlias type="global.sesoc.seworld.dto.MemberDetail" alias="MemberDetail" />
-		<typeAlias type="global.sesoc.seworld.dto.Regions" alias="Regions" />
-		<typeAlias type="global.sesoc.seworld.dto.Timeline" alias="Timeline" />
-		<typeAlias type="global.sesoc.seworld.dto.Wishing" alias="Wishing" />
-		<typeAlias type="global.sesoc.seworld.dto.Counting" alias="Counting" />
-		<typeAlias type="global.sesoc.seworld.dto.Calendar" alias="Calendar" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Board" alias="Board" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.BoardFile" alias="BoardFile" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.BoardReply" alias="BoardReply" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Cities" alias="Cities" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Comment" alias="Comment" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Countries" alias="Countries" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.ExbtInfo" alias="ExbtInfo" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Exhibition" alias="Exhibition" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.ExhibitionDetail" alias="ExhibitionDetail" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.ExbtWLCCount" alias="ExbtWLCCount" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Followship" alias="Followship" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Liking" alias="Liking" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Member" alias="Member" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.MemberDetail" alias="MemberDetail" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Regions" alias="Regions" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Timeline" alias="Timeline" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Wishing" alias="Wishing" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Counting" alias="Counting" />
+		<typeAlias type="global.sesoc.seworld.domain.dto.Calendar" alias="Calendar" />
 	</typeAliases>
 
 	<mappers>

@@ -1,120 +1,119 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.BoardReplyMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.BoardReplyMapper">
 
-	<select id="selectAllBoardReplies" parameterType="String"
-		resultType="BoardReply">
-		SELECT
-		boardReplyId
-		,boardId
-		,memberId
-		,content
-		,createdDate
-		,updatedDate
-		FROM
-		c6_board_reply
-		WHERE boardReplyId = #{boardReplyId}
-		ORDER BY
-		boardReplyId
-	</select>
-	
-<!-- 해당 글에대한 리플들 -->
-	<select  id="boardReplyOfOneboard" parameterType="String"
-		resultType="BoardReply">
-		SELECT
-		boardReplyId
-		,boardId
-		,memberId
-		,content
-		,createdDate
-		,updatedDate
-		FROM
-		c6_board_reply
-		WHERE boardId = #{boardId}
-		ORDER BY
-		boardReplyId
-	</select>
-	
-	<!-- 댓글 불러올때 null인경우 아닌 경우 구분 -->
-	<select id = "countBoardReply" resultType="int" parameterType="String">
-	 select count(*) from c6_board_reply  where boardId = #{boardId}
-	</select>
-	
-	
-	<select id="selectOneBoardReply" parameterType="String"
-		resultType="BoardReply">
-		SELECT
-		boardReplyId
-		,boardId
-		,memberId
-		,content
-		,createdDate
-		,updatedDate
-		FROM c6_board_reply
-		WHERE boardReplyId = #{boardReplyId}
-	</select>
+    <select id="selectAllBoardReplies" parameterType="String"
+            resultType="BoardReply">
+        SELECT
+        boardReplyId
+        ,boardId
+        ,memberId
+        ,content
+        ,createdDate
+        ,updatedDate
+        FROM
+        c6_board_reply
+        WHERE boardReplyId = #{boardReplyId}
+        ORDER BY
+        boardReplyId
+    </select>
 
-	<!-- 전체 목록 받아오기 -->
-	<select id="getBoardRepliesList" resultType="BoardReply">
-		select *
-		from
-		c6_board_reply
-	</select>
+    <!-- 해당 글에대한 리플들 -->
+    <select id="boardReplyOfOneboard" parameterType="String"
+            resultType="BoardReply">
+        SELECT
+        boardReplyId
+        ,boardId
+        ,memberId
+        ,content
+        ,createdDate
+        ,updatedDate
+        FROM
+        c6_board_reply
+        WHERE boardId = #{boardId}
+        ORDER BY
+        boardReplyId
+    </select>
 
-	<select id="getBoardReplyId" parameterType="String"
-		resultType="String">
-		select boardReplyId
-		from c6_board_reply
-		where
-		boardId=#{boardReplyId}
-	</select>
+    <!-- 댓글 불러올때 null인경우 아닌 경우 구분 -->
+    <select id="countBoardReply" resultType="int" parameterType="String">
+        select count(*) from c6_board_reply where boardId = #{boardId}
+    </select>
 
-	<insert id="insertOneBoardReply" parameterType="BoardReply">
-		INSERT INTO
-		c6_board_reply
-		(
-		boardReplyId
-		,boardId
-		,memberId
-		,content
-		,createdDate
-		,updatedDate
-		)
-		VALUES
-		(
-		REPLACE(#{boardId} || '-R' ||
-		TO_CHAR(c6_board_reply_seq.NEXTVAL, '0000'), ' ', '')
-		,#{boardId}
-		,#{memberId}
-		,#{content}
-		,SYSDATE
-		,SYSDATE
-		)
-	</insert>
 
-	<delete id="deleteOneBoardReply" parameterType="BoardReply">
-		DELETE
-		FROM
-		c6_board_reply
-		WHERE boardReplyId = #{boardReplyId}
-		AND memberId =
-		#{memberId}
-	</delete>
+    <select id="selectOneBoardReply" parameterType="String"
+            resultType="BoardReply">
+        SELECT
+        boardReplyId
+        ,boardId
+        ,memberId
+        ,content
+        ,createdDate
+        ,updatedDate
+        FROM c6_board_reply
+        WHERE boardReplyId = #{boardReplyId}
+    </select>
 
-	<update id="updateOneBoardReply" parameterType="BoardReply">
-		UPDATE
-		c6_board_reply
-		SET
-		content = #{content}
-		,updatedDate = SYSDATE
-		WHERE
-		boardReplyId = #{boardReplyId}
-		AND memberId = #{memerId}
-	</update>
-	
-	
+    <!-- 전체 목록 받아오기 -->
+    <select id="getBoardRepliesList" resultType="BoardReply">
+        select *
+        from
+        c6_board_reply
+    </select>
+
+    <select id="getBoardReplyId" parameterType="String"
+            resultType="String">
+        select boardReplyId
+        from c6_board_reply
+        where
+        boardId=#{boardReplyId}
+    </select>
+
+    <insert id="insertOneBoardReply" parameterType="BoardReply">
+        INSERT INTO
+        c6_board_reply
+        (
+        boardReplyId
+        ,boardId
+        ,memberId
+        ,content
+        ,createdDate
+        ,updatedDate
+        )
+        VALUES
+        (
+        REPLACE(#{boardId} || '-R' ||
+        TO_CHAR(c6_board_reply_seq.NEXTVAL, '0000'), ' ', '')
+        ,#{boardId}
+        ,#{memberId}
+        ,#{content}
+        ,SYSDATE
+        ,SYSDATE
+        )
+    </insert>
+
+    <delete id="deleteOneBoardReply" parameterType="BoardReply">
+        DELETE
+        FROM
+        c6_board_reply
+        WHERE boardReplyId = #{boardReplyId}
+        AND memberId =
+        #{memberId}
+    </delete>
+
+    <update id="updateOneBoardReply" parameterType="BoardReply">
+        UPDATE
+        c6_board_reply
+        SET
+        content = #{content}
+        ,updatedDate = SYSDATE
+        WHERE
+        boardReplyId = #{boardReplyId}
+        AND memberId = #{memerId}
+    </update>
+
 
 </mapper>

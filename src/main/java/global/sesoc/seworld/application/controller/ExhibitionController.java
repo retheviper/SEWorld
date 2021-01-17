@@ -2,13 +2,14 @@ package global.sesoc.seworld.application.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import global.sesoc.seworld.dao.CommentRepository;
-import global.sesoc.seworld.dao.ExbtWLCCountRepository;
-import global.sesoc.seworld.dao.ExhibitionRepository;
-import global.sesoc.seworld.dto.*;
+import global.sesoc.seworld.domain.dao.CommentRepository;
+import global.sesoc.seworld.domain.dao.ExbtWLCCountRepository;
+import global.sesoc.seworld.domain.dao.ExhibitionRepository;
+import global.sesoc.seworld.domain.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,7 @@ import java.util.List;
  */
 @Slf4j
 @Controller
+@Transactional
 @RequiredArgsConstructor
 public class ExhibitionController {
 
@@ -45,7 +47,7 @@ public class ExhibitionController {
     @PostMapping(value = "/exhibitionListAjax", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String exhibitionListAjax(final int start, final int length, @RequestParam(value = "search[value]") final String searchText) {
-        int totalCount = exhibitionRepository.getTotalList(searchText);
+        final int totalCount = exhibitionRepository.getTotalList(searchText);
         final List<Exhibition> exhibitions = exhibitionRepository.showExhibitionList(start, length, searchText);
         final TableWrapper wrapper = new TableWrapper(exhibitions, totalCount, totalCount);
         try {
@@ -58,9 +60,9 @@ public class ExhibitionController {
     // 상세 전시회 보기 페이지
     @GetMapping(value = "/exhibitionDetail")
     public String exhibitionDetail(String exhibitionId, Model model) {
-        Exhibition exhibition = exhibitionRepository.showExhibitionDetail(exhibitionId);
-        ExbtWLCCount exbtWLCCount = exbtWLCCountRepository.viewCount(exhibitionId);
-        List<Comment> commentList = commentRepository.selectAllCommentsFromExhibition(exhibitionId);
+        final Exhibition exhibition = exhibitionRepository.showExhibitionDetail(exhibitionId);
+        final ExbtWLCCount exbtWLCCount = exbtWLCCountRepository.viewCount(exhibitionId);
+        final List<Comment> commentList = commentRepository.selectAllCommentsFromExhibition(exhibitionId);
         model.addAttribute("exhibition", exhibition);
         model.addAttribute("exbtWLCCount", exbtWLCCount);
         model.addAttribute("commentList", commentList);

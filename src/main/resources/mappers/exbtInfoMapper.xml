@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.ExbtInfoMapper">
-	<insert id="insertExbtInfo" parameterType="ExbtInfo">
-		INSERT INTO c6_exbtinfo
-		VALUES (
-			#{exhibitionTitleKor},
-			#{exhibitionTitleEng},
-			#{openingTerm},
-			#{openingCycle},
-			#{firstOpeningYear},
-			#{openingScale},
-			#{openingCountry},
-			#{openingCity},
-			#{exhibitionHall},
-			#{participatingNationCount},
-			#{openingCountryCount},
-			#{overseasCount},
-			#{openingCountryVisitorsCount},
-			#{mainParticipatingNations},
-			#{KOREACompanyWhether},
-			#{KOREACompanyParticipatingCount},
-			#{totalVisitorsCount},
-			#{overseasVisitorsCount},
-			#{exhibitionArea},
-			#{sponsor},
-			#{personInCharge},
-			#{address},
-			#{telephone},
-			#{fax},
-			#{homepage},
-			#{email},
-			TO_DATE(#{createdDate}, 'YYYY-MM-DD HH24:MI:SS'),
-			TO_DATE(#{lastUpdatedDate}, 'YYYY-MM-DD HH24:MI:SS'),
-			#{source},
-			#{dataOffer},
-			#{exhibitionItem},
-			#{remarks}
-		)
-	</insert>
+<mapper namespace="global.sesoc.seworld.domain.dao.ExbtInfoMapper">
+    <insert id="insertExbtInfo" parameterType="ExbtInfo">
+        INSERT INTO c6_exbtinfo
+        VALUES (
+        #{exhibitionTitleKor},
+        #{exhibitionTitleEng},
+        #{openingTerm},
+        #{openingCycle},
+        #{firstOpeningYear},
+        #{openingScale},
+        #{openingCountry},
+        #{openingCity},
+        #{exhibitionHall},
+        #{participatingNationCount},
+        #{openingCountryCount},
+        #{overseasCount},
+        #{openingCountryVisitorsCount},
+        #{mainParticipatingNations},
+        #{KOREACompanyWhether},
+        #{KOREACompanyParticipatingCount},
+        #{totalVisitorsCount},
+        #{overseasVisitorsCount},
+        #{exhibitionArea},
+        #{sponsor},
+        #{personInCharge},
+        #{address},
+        #{telephone},
+        #{fax},
+        #{homepage},
+        #{email},
+        TO_DATE(#{createdDate}, 'YYYY-MM-DD HH24:MI:SS'),
+        TO_DATE(#{lastUpdatedDate}, 'YYYY-MM-DD HH24:MI:SS'),
+        #{source},
+        #{dataOffer},
+        #{exhibitionItem},
+        #{remarks}
+        )
+    </insert>
 </mapper>

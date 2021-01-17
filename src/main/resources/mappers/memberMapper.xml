@@ -1,80 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.MemberMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.MemberMapper">
 
-	<select id="selectOneMember" parameterType="String" resultType="Member">
-		SELECT
-		memberId
-		,memberPwd
-		,memberName
-		,memberType
-		,verified
-		,regDate
-		FROM c6_member
-		WHERE memberId = #{memberId}
-	</select>
+    <select id="selectOneMember" parameterType="String" resultType="Member">
+        SELECT
+        memberId
+        ,memberPwd
+        ,memberName
+        ,memberType
+        ,verified
+        ,regDate
+        FROM c6_member
+        WHERE memberId = #{memberId}
+    </select>
 
-	<insert id="insertOneMember" parameterType="Member">
-		INSERT INTO c6_member
-		(
-		memberId
-		,memberPwd
-		,memberName
-		,memberType
-		)
-		VALUES
-		(
-		#{memberId}
-		,#{memberPwd}
-		,#{memberName}
-		,'Email'
-		)
-	</insert>
+    <insert id="insertOneMember" parameterType="Member">
+        INSERT INTO c6_member
+        (
+        memberId
+        ,memberPwd
+        ,memberName
+        ,memberType
+        )
+        VALUES
+        (
+        #{memberId}
+        ,#{memberPwd}
+        ,#{memberName}
+        ,'Email'
+        )
+    </insert>
 
-	<update id="verifyMember" parameterType="String">
-		UPDATE c6_member
-		SET
-		verified = 'Y'
-		WHERE memberId = #{memberId}
-	</update>
+    <update id="verifyMember" parameterType="String">
+        UPDATE c6_member
+        SET
+        verified = 'Y'
+        WHERE memberId = #{memberId}
+    </update>
 
-	<insert id="registerGoogleMember" parameterType="Member">
-		INSERT INTO
-		c6_member
-		(
-		memberId
-		,memberName
-		,memberType
-		,verified
-		)
-		VALUES
-		(
-		#{memberId}
-		,#{memberName}
-		,'Google'
-		,'Y'
-		)
-	</insert>
+    <insert id="registerGoogleMember" parameterType="Member">
+        INSERT INTO
+        c6_member
+        (
+        memberId
+        ,memberName
+        ,memberType
+        ,verified
+        )
+        VALUES
+        (
+        #{memberId}
+        ,#{memberName}
+        ,'Google'
+        ,'Y'
+        )
+    </insert>
 
-	<insert id="registerFacebookMember" parameterType="Member">
-		INSERT INTO
-		c6_member
-		(
-		memberId
-		,memberName
-		,memberType
-		,verified
-		)
-		VALUES
-		(
-		#{memberId}
-		,#{memberName}
-		,'Facebook'
-		,'Y'
-		)
-	</insert>
+    <insert id="registerFacebookMember" parameterType="Member">
+        INSERT INTO
+        c6_member
+        (
+        memberId
+        ,memberName
+        ,memberType
+        ,verified
+        )
+        VALUES
+        (
+        #{memberId}
+        ,#{memberName}
+        ,'Facebook'
+        ,'Y'
+        )
+    </insert>
 
 </mapper>

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.CitiesMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.CitiesMapper">
 
-	<select id="selectAllCities" resultType="Cities">
-		SELECT
-		cityId
-		,cityName
-		,countryId
-		FROM c6_cities
-		ORDER BY cityId
-	</select>
+    <select id="selectAllCities" resultType="Cities">
+        SELECT
+        cityId
+        ,cityName
+        ,countryId
+        FROM c6_cities
+        ORDER BY cityId
+    </select>
 
-	<select id="selectOneCity" parameterType="String" resultType="Cities">
-		SELECT
-		cityId
-		,cityName
-		,countryId
-		FROM c6_cities
-		WHERE cityName = #{cityName}
-	</select>
+    <select id="selectOneCity" parameterType="String" resultType="Cities">
+        SELECT
+        cityId
+        ,cityName
+        ,countryId
+        FROM c6_cities
+        WHERE cityName = #{cityName}
+    </select>
 
 </mapper>

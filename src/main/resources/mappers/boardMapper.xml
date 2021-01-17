@@ -1,197 +1,197 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="global.sesoc.seworld.dao.BoardMapper">
+<mapper namespace="global.sesoc.seworld.domain.dao.BoardMapper">
 
-	<select id="getTotalList" resultType="int">
-		SELECT COUNT(*)
-		FROM
-		c6_board
-	</select>
+    <select id="getTotalList" resultType="int">
+        SELECT COUNT(*)
+        FROM
+        c6_board
+    </select>
 
-	<select id="viewAllReviews" resultType="Board"
-		parameterType="String">
-		SELECT
-		boardId
-		,memberId
-		,category
-		,title
-		,content
-		,to_char(createdDate, 'HH:MM, MON DD, YYYY',
-		'NLS_DATE_LANGUAGE=ENGLISH') createdDate
-		,to_char(updatedDate, 'HH:MM,
-		MON DD, YYYY', 'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
-		,exhibitionid
-		FROM
-		(select * from c6_board where memberId like '%' ||
-		#{searchText} ||
-		'%' or title like '%' || #{searchText}
-		|| '%'
-		or content like '%' ||
-		#{searchText} || '%'
-		)
-		c6_board
-		where
-		category =
-		'review'
-		ORDER BY
-		boardId
-		DESC
-	</select>
+    <select id="viewAllReviews" resultType="Board"
+            parameterType="String">
+        SELECT
+        boardId
+        ,memberId
+        ,category
+        ,title
+        ,content
+        ,to_char(createdDate, 'HH:MM, MON DD, YYYY',
+        'NLS_DATE_LANGUAGE=ENGLISH') createdDate
+        ,to_char(updatedDate, 'HH:MM,
+        MON DD, YYYY', 'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
+        ,exhibitionid
+        FROM
+        (select * from c6_board where memberId like '%' ||
+        #{searchText} ||
+        '%' or title like '%' || #{searchText}
+        || '%'
+        or content like '%' ||
+        #{searchText} || '%'
+        )
+        c6_board
+        where
+        category =
+        'review'
+        ORDER BY
+        boardId
+        DESC
+    </select>
 
-	<select id="viewAllQuestions" resultType="Board"
-		parameterType="String">
-		SELECT
-		boardId
-		,memberId
-		,category
-		,title
-		,to_char(createdDate, 'HH:MM, MON DD, YYYY',
-		'NLS_DATE_LANGUAGE=ENGLISH') createdDate
-		,to_char(updatedDate, 'HH:MM,
-		MON DD, YYYY', 'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
-		,exhibitionid
-		FROM(select * from
-		c6_board where
-		memberId like '%' ||
-		#{searchText} ||
-		'%' or title like
-		'%' ||
-		#{searchText}
-		|| '%'
-		or content like '%' ||
-		#{searchText} || '%'
-		)
-		where
-		category =
-		'question' ORDER BY
-		boardId
-		DESC
-	</select>
+    <select id="viewAllQuestions" resultType="Board"
+            parameterType="String">
+        SELECT
+        boardId
+        ,memberId
+        ,category
+        ,title
+        ,to_char(createdDate, 'HH:MM, MON DD, YYYY',
+        'NLS_DATE_LANGUAGE=ENGLISH') createdDate
+        ,to_char(updatedDate, 'HH:MM,
+        MON DD, YYYY', 'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
+        ,exhibitionid
+        FROM(select * from
+        c6_board where
+        memberId like '%' ||
+        #{searchText} ||
+        '%' or title like
+        '%' ||
+        #{searchText}
+        || '%'
+        or content like '%' ||
+        #{searchText} || '%'
+        )
+        where
+        category =
+        'question' ORDER BY
+        boardId
+        DESC
+    </select>
 
-	<select id="viewBoardDetail" resultType="Board"
-		parameterType="String">
-		select
-		boardId
-		,memberId
-		,category
-		,title
-		,content
-		,createdDate
-		,updatedDate
-		,exhibitionid
-		FROM
-		c6_board
-		WHERE boardid =
-		#{boardId}
-	</select>
+    <select id="viewBoardDetail" resultType="Board"
+            parameterType="String">
+        select
+        boardId
+        ,memberId
+        ,category
+        ,title
+        ,content
+        ,createdDate
+        ,updatedDate
+        ,exhibitionid
+        FROM
+        c6_board
+        WHERE boardid =
+        #{boardId}
+    </select>
 
-	<!-- 메인 화면에 띄울 최근 리뷰 게시글 6건 -->
-	<select id="getRecentReviews" resultType="Board">
-		select
-		boardId
-		,memberId
-		,category
-		,title
-		,content
-		,to_char(createdDate, 'DD MON YYYY',
-		'NLS_DATE_LANGUAGE=ENGLISH') createdDate
-		,to_char(updatedDate, 'DD MON
-		YYYY', 'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
-		,exhibitionid
-		FROM
-		(
-		select
-		*
-		from c6_board
-		where category = 'review'
-		order by
-		boardId DESC
-		)
-		where rownum
-		&lt; 7
-	</select>
+    <!-- 메인 화면에 띄울 최근 리뷰 게시글 6건 -->
+    <select id="getRecentReviews" resultType="Board">
+        select
+        boardId
+        ,memberId
+        ,category
+        ,title
+        ,content
+        ,to_char(createdDate, 'DD MON YYYY',
+        'NLS_DATE_LANGUAGE=ENGLISH') createdDate
+        ,to_char(updatedDate, 'DD MON
+        YYYY', 'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
+        ,exhibitionid
+        FROM
+        (
+        select
+        *
+        from c6_board
+        where category = 'review'
+        order by
+        boardId DESC
+        )
+        where rownum
+        &lt; 7
+    </select>
 
-	<!-- 게시물 상세보기에 띄울 작성자 게시글 3건 -->
-	<select id="getAuthorsRecentReviews" resultType="Board"
-		parameterType="String">
-		select
-		boardId
-		,memberId
-		,category
-		,title
-		,content
-		,to_char(createdDate, 'DD MON YYYY',
-		'NLS_DATE_LANGUAGE=ENGLISH')
-		createdDate
-		,to_char(updatedDate, 'DD MON
-		YYYY',
-		'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
-		,exhibitionid
-		FROM
-		(
-		select
-		*
-		from
-		c6_board
-		order by
-		boardId DESC
-		)
-		where memberId=#{memberId} and rownum
-		&lt; 4
-	</select>
+    <!-- 게시물 상세보기에 띄울 작성자 게시글 3건 -->
+    <select id="getAuthorsRecentReviews" resultType="Board"
+            parameterType="String">
+        select
+        boardId
+        ,memberId
+        ,category
+        ,title
+        ,content
+        ,to_char(createdDate, 'DD MON YYYY',
+        'NLS_DATE_LANGUAGE=ENGLISH')
+        createdDate
+        ,to_char(updatedDate, 'DD MON
+        YYYY',
+        'NLS_DATE_LANGUAGE=ENGLISH') updatedDate
+        ,exhibitionid
+        FROM
+        (
+        select
+        *
+        from
+        c6_board
+        order by
+        boardId DESC
+        )
+        where memberId=#{memberId} and rownum
+        &lt; 4
+    </select>
 
-	<!-- 게시물에 파일 저장시 외래키 받아오기 -->
-	<select id="getBoardId" resultType="String"
-		parameterType="String">
-		select boardid from
-		c6_board where memberid = #{memberId}
-		and rownum=1
-	</select>
+    <!-- 게시물에 파일 저장시 외래키 받아오기 -->
+    <select id="getBoardId" resultType="String"
+            parameterType="String">
+        select boardid from
+        c6_board where memberid = #{memberId}
+        and rownum=1
+    </select>
 
-	<insert id="insertBoard" parameterType="Board">
-		INSERT INTO c6_board
-		(
-		boardid
-		,memberid
-		,category
-		,title
-		,content
-		,createddate
-		,updateddate
-		,exhibitionid
-		)
-		VALUES
-		(
-		REPLACE('B' || TO_CHAR(c6_board_seq.NEXTVAL,
-		'000000000'), ' ', '')
-		,#{memberId}
-		,#{category}
-		,#{title}
-		,#{content}
-		,SYSDATE
-		,SYSDATE
-		,#{exhibitionId}
-		)
-	</insert>
+    <insert id="insertBoard" parameterType="Board">
+        INSERT INTO c6_board
+        (
+        boardid
+        ,memberid
+        ,category
+        ,title
+        ,content
+        ,createddate
+        ,updateddate
+        ,exhibitionid
+        )
+        VALUES
+        (
+        REPLACE('B' || TO_CHAR(c6_board_seq.NEXTVAL,
+        '000000000'), ' ', '')
+        ,#{memberId}
+        ,#{category}
+        ,#{title}
+        ,#{content}
+        ,SYSDATE
+        ,SYSDATE
+        ,#{exhibitionId}
+        )
+    </insert>
 
-	<update id="updateBoard" parameterType="Board">
-		UPDATE c6_board
-		SET
-		category = #{category}
-		,title = #{title}
-		,content = #{content}
-		,updateddate = SYSDATE
-		WHERE boardid = #{boardId}
-	</update>
+    <update id="updateBoard" parameterType="Board">
+        UPDATE c6_board
+        SET
+        category = #{category}
+        ,title = #{title}
+        ,content = #{content}
+        ,updateddate = SYSDATE
+        WHERE boardid = #{boardId}
+    </update>
 
-	<delete id="deleteBoard" parameterType="String">
-		DELETE
-		FROM c6_board
-		WHERE
-		boardid = #{boardId}
-	</delete>
+    <delete id="deleteBoard" parameterType="String">
+        DELETE
+        FROM c6_board
+        WHERE
+        boardid = #{boardId}
+    </delete>
 
 </mapper>

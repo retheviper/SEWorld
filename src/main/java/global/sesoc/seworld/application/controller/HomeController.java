@@ -1,14 +1,15 @@
 package global.sesoc.seworld.application.controller;
 
-import global.sesoc.seworld.dao.BoardReplyRepository;
-import global.sesoc.seworld.dao.BoardRepository;
-import global.sesoc.seworld.dao.ExhibitionRepository;
-import global.sesoc.seworld.dto.Board;
-import global.sesoc.seworld.dto.BoardReply;
-import global.sesoc.seworld.dto.Exhibition;
+import global.sesoc.seworld.domain.dao.BoardReplyRepository;
+import global.sesoc.seworld.domain.dao.BoardRepository;
+import global.sesoc.seworld.domain.dao.ExhibitionRepository;
+import global.sesoc.seworld.domain.dto.Board;
+import global.sesoc.seworld.domain.dto.BoardReply;
+import global.sesoc.seworld.domain.dto.Exhibition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -24,6 +25,7 @@ import java.util.Map;
  */
 @Slf4j
 @Controller
+@Transactional
 @RequiredArgsConstructor
 public class HomeController {
 
@@ -35,22 +37,22 @@ public class HomeController {
 
     // 메인 페이지로 이동
     @GetMapping
-    public String home(Model model) {
+    public String home(final Model model) {
         log.info("[/]");
         return mainPage(model);
     }
 
     @GetMapping(value = "/main")
-    public String main(Model model) {
+    public String main(final Model model) {
         log.info("[/main]");
         return mainPage(model);
     }
 
-    private String mainPage(Model model) {
-        List<Exhibition> recentExhibition = exhibitionRepository.getRecentExhibition();
-        List<Board> recentReviews = boardRepository.getRecentReviews();
-        List<BoardReply> replies = boardReplyRepository.getBoardRepliesList();
-        Map<String, Integer> replyListCount = new HashMap<>();
+    private String mainPage(final Model model) {
+        final List<Exhibition> recentExhibition = exhibitionRepository.getRecentExhibition();
+        final List<Board> recentReviews = boardRepository.getRecentReviews();
+        final List<BoardReply> replies = boardReplyRepository.getBoardRepliesList();
+        final Map<String, Integer> replyListCount = new HashMap<>();
         for (int i = 0; i < recentReviews.size(); i++) {
             int counter = 0;
             for (int j = 0; j < replies.size(); j++) {
@@ -80,7 +82,7 @@ public class HomeController {
     }
 
     @GetMapping(value = "/howtouse")
-    public String howtouse() {
+    public String howToUse() {
         return "howtouse";
     }
 
