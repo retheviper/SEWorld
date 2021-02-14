@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,6 +26,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * SE World Review Controller
@@ -53,7 +53,7 @@ public class BoardController {
 
     private final MemberRepository memberRepository;
 
-    private final String uploadPath = "resources/userUploadedFile/attachments";
+    private static final String UPLOAD_PATH = "resources/userUploadedFile/attachments";
 
     // 리뷰 게시판 페이지로 이동
     @GetMapping(value = "/reviews")
@@ -65,8 +65,8 @@ public class BoardController {
     @PostMapping(value = "/reviewsAjax", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getReviewsByAsync(final int start, final int length, @RequestParam(value = "search[value]") final String searchText) {
-        final int totalCount = boardRepository.getTotalList();
-        final List<Board> boards = boardRepository.viewAllReviews(start, length, searchText);
+        final int totalCount = this.boardRepository.getTotalList();
+        final List<Board> boards = this.boardRepository.viewAllReviews(start, length, searchText);
         try {
             return createJson(boards, totalCount);
         } catch (JsonProcessingException e) {
@@ -84,8 +84,8 @@ public class BoardController {
     @PostMapping(value = "/questionsAjax", produces = "text/plain;charset=UTF-8")
     @ResponseBody
     public String getQuestionsByAsync(final int start, final int length, @RequestParam(value = "search[value]") final String searchText) {
-        final int totalCount = boardRepository.getTotalList();
-        final List<Board> boards = boardRepository.viewAllQuestions(start, length, searchText);
+        final int totalCount = this.boardRepository.getTotalList();
+        final List<Board> boards = this.boardRepository.viewAllQuestions(start, length, searchText);
         try {
             return createJson(boards, totalCount);
         } catch (JsonProcessingException e) {
@@ -100,8 +100,8 @@ public class BoardController {
     // 게시글 읽기
     @GetMapping(value = "/readArticle")
     public String readArticle(final String boardId, final Model model) {
-        final Board articleDetail = boardRepository.viewBoardDetail(boardId);
-        final Exhibition exhibitionForArticle = exhibitionRepository.showExhibitionDetail(articleDetail.getExhibitionId());
+        final Board articleDetail = this.boardRepository.viewBoardDetail(boardId);
+        final Exhibition exhibitionForArticle = this.exhibitionRepository.showExhibitionDetail(articleDetail.getExhibitionId());
 
         final int countR = boardReplyRepository.countBoardReply(boardId);
         final List<BoardReply>
@@ -116,23 +116,16 @@ public class BoardController {
             model.addAttribute("articleAttachement", articleAttachement);
         }
         final List<BoardReply> replies = boardReplyRepository.getBoardRepliesList();
-        final List<Board> relatedArticles = boardRepository.getAuthosRecentReviews(articleDetail.getMemberId());
-        if (relatedArticles != null) {
+        final List<Board> relatedArticles = this.boardRepository.getAuthosRecentReviews(articleDetail.getMemberId());
+        if (relatedArticles != null && !relatedArticles.isEmpty()) {
             model.addAttribute("RelatedArticles", relatedArticles);
-            final List<BoardReply> repliesOfOtherArticles = boardReplyRepository.getBoardRepliesList();
             final Map<String, Integer> replyListCount = new HashMap<>();
-
-            for (int i = 0; i < relatedArticles.size(); i++) {
-                int counter = 0;
-                for (int j = 0; j < replies.size(); j++) {
-                    if (relatedArticles.get(i).getBoardId().equals(repliesOfOtherArticles.get(j).getBoardId())) {
-                        counter += 1;
-                    }
-                }
-                replyListCount.put(relatedArticles.get(i).getBoardId(), counter);
+            for (var relatedArticle : relatedArticles) {
+                replyListCount.put(relatedArticle.getBoardId(), (int) replies.stream().filter(repliesOfOtherArticle -> Objects.equals(relatedArticle.getBoardId(), repliesOfOtherArticle.getBoardId())).count());
             }
             model.addAttribute("replyListCount", replyListCount);
         }
+
         final int replyCount = (int) replies.stream().filter(br -> br.getBoardId().equals(boardId)).count();
         final int heartCount = (int) (Math.random() * 5) + 1;
 
@@ -155,7 +148,7 @@ public class BoardController {
     public String writeReview(final Board board, final MultipartFile uploadFile, final HttpSession session) {
         final String userId = SessionAttributeSupplier.getLoginId(session);
         board.setMemberId(userId);
-        boardRepository.insertBoard(board);
+        this.boardRepository.insertBoard(board);
         if (!uploadFile.isEmpty()) {
             saveFile(uploadFile, userId);
         }
@@ -165,8 +158,8 @@ public class BoardController {
     // 게시물 수정 페이지 이동
     @GetMapping(value = "/updateArticle")
     public String updateReview(final String boardId, final Model model) {
-        final Board original = boardRepository.viewBoardDetail(boardId);
-        final Exhibition selectedExhibition = exhibitionRepository.showExhibitionDetail(original.getExhibitionId());
+        final Board original = this.boardRepository.viewBoardDetail(boardId);
+        final Exhibition selectedExhibition = this.exhibitionRepository.showExhibitionDetail(original.getExhibitionId());
         final String boardFileId = boardFileRepository.getBoardFileIdByBoardId(boardId);
         final BoardFile originalFile = boardFileRepository.selectOneBoardFile(boardFileId);
         if (originalFile != null) {
@@ -181,15 +174,15 @@ public class BoardController {
     @PostMapping(value = "/updateArticle")
     public String updateReview(final Board board, final MultipartFile uploadFile, final HttpSession session, final String deleteFile) {
         final String userId = SessionAttributeSupplier.getLoginId(session);
-        final String boardId = boardRepository.getBoardId(userId);
+        final String boardId = this.boardRepository.getBoardId(userId);
         board.setMemberId(userId);
-        boardRepository.updateBoard(board);
+        this.boardRepository.updateBoard(board);
         final String oldFileId = boardFileRepository.getBoardFileIdByBoardId(boardId);
         final BoardFile oldBoardFile = boardFileRepository.selectOneBoardFile(oldFileId);
 
         if (deleteFile != null && deleteFile.strip().equals("deletefile")) {
             final String savedFile = oldBoardFile.getSvFilename();
-            final String fullPath = uploadPath + "/" + savedFile;
+            final String fullPath = UPLOAD_PATH + "/" + savedFile;
             FileService.deleteFile(fullPath);
             boardFileRepository.deleteOneBoardFile(boardId);
         } else if (oldBoardFile != null && !uploadFile.isEmpty()) {
@@ -202,7 +195,7 @@ public class BoardController {
     // 게시물 삭제하기
     @GetMapping(value = "/deleteArticle")
     public String deleteReview(final String boardId) {
-        boardRepository.deleteBoard(boardId);
+        this.boardRepository.deleteBoard(boardId);
         return RedirectUtil.redirectTo("/reviews");
     }
 
@@ -212,7 +205,7 @@ public class BoardController {
         final String boardFileId = boardFileRepository.getBoardFileIdByBoardId(boardId);
         final BoardFile originalFile = boardFileRepository.selectOneBoardFile(boardFileId);
         final String originalFileOgFilename = originalFile.getOgFilename();
-        final String fileSavedPath = uploadPath + "/" + originalFile.getSvFilename();
+        final String fileSavedPath = UPLOAD_PATH + "/" + originalFile.getSvFilename();
         try (InputStream input = Files.newInputStream(Path.of(fileSavedPath));
              OutputStream output = response.getOutputStream()) {
             input.transferTo(output);
@@ -251,9 +244,9 @@ public class BoardController {
 
     private void saveFile(final MultipartFile uploadFile, final String userId) {
         final String originalFile = uploadFile.getOriginalFilename();
-        final String savedFile = FileService.saveFile(uploadFile, uploadPath);
+        final String savedFile = FileService.saveFile(uploadFile, UPLOAD_PATH);
         final BoardFile boardFile = new BoardFile();
-        boardFile.setBoardId(boardRepository.getBoardId(userId));
+        boardFile.setBoardId(this.boardRepository.getBoardId(userId));
         boardFile.setOgFilename(originalFile);
         boardFile.setSvFilename(savedFile);
         boardFile.setFileSize(uploadFile.getSize());
