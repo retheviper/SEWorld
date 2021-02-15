@@ -23,10 +23,10 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * SE World Review Controller
@@ -103,37 +103,33 @@ public class BoardController {
         final Board articleDetail = this.boardRepository.viewBoardDetail(boardId);
         final Exhibition exhibitionForArticle = this.exhibitionRepository.showExhibitionDetail(articleDetail.getExhibitionId());
 
-        final int countR = boardReplyRepository.countBoardReply(boardId);
+        final int countR = this.boardReplyRepository.countBoardReply(boardId);
         final List<BoardReply>
-                replyList = boardReplyRepository.boardReplyOfOneboard(boardId);
+                replyList = this.boardReplyRepository.boardReplyOfOneboard(boardId);
         model.addAttribute("countNum", countR);
         model.addAttribute("replyList", replyList);
 
-        final Member articleAuthor = memberRepository.selectOneMember(articleDetail.getMemberId());
-        final String articleFileId = boardFileRepository.getBoardFileIdByBoardId(boardId);
+        final Member articleAuthor = this.memberRepository.selectOneMember(articleDetail.getMemberId());
+        final String articleFileId = this.boardFileRepository.getBoardFileIdByBoardId(boardId);
         if (articleFileId != null) {
-            final BoardFile articleAttachement = boardFileRepository.selectOneBoardFile(articleFileId);
+            final BoardFile articleAttachement = this.boardFileRepository.selectOneBoardFile(articleFileId);
             model.addAttribute("articleAttachement", articleAttachement);
         }
-        final List<BoardReply> replies = boardReplyRepository.getBoardRepliesList();
+        final List<BoardReply> replies = this.boardReplyRepository.getBoardRepliesList();
         final List<Board> relatedArticles = this.boardRepository.getAuthosRecentReviews(articleDetail.getMemberId());
         if (relatedArticles != null && !relatedArticles.isEmpty()) {
             model.addAttribute("RelatedArticles", relatedArticles);
-            final Map<String, Integer> replyListCount = new HashMap<>();
-            for (var relatedArticle : relatedArticles) {
-                replyListCount.put(relatedArticle.getBoardId(), (int) replies.stream().filter(repliesOfOtherArticle -> Objects.equals(relatedArticle.getBoardId(), repliesOfOtherArticle.getBoardId())).count());
-            }
+            final Map<String, Long> replyListCount = relatedArticles.stream()
+                    .collect(Collectors.toMap(relatedArticle -> relatedArticle.getBoardId(),
+                            relatedArticle -> replies.stream().filter(repliesOfOtherArticle -> Objects.equals(relatedArticle.getBoardId(), repliesOfOtherArticle.getBoardId())).count()));
             model.addAttribute("replyListCount", replyListCount);
         }
 
-        final int replyCount = (int) replies.stream().filter(br -> br.getBoardId().equals(boardId)).count();
-        final int heartCount = (int) (Math.random() * 5) + 1;
-
-        model.addAttribute("numofHeart", heartCount);
+        model.addAttribute("numofHeart", (Math.random() * 5) + 1);
         model.addAttribute("articleAuthor", articleAuthor);
         model.addAttribute("articleDetail", articleDetail);
         model.addAttribute("exbhibitionForArticle", exhibitionForArticle);
-        model.addAttribute("replyCount", replyCount);
+        model.addAttribute("replyCount", replies.stream().filter(br -> br.getBoardId().equals(boardId)).count());
         return "board/readArticle";
     }
 
